@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3525bb3d-f146-4ef2-b735-00dd8b9f3498">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="16"/>
+	<parameter name="FECHAINICIAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2014-10-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHAFINAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2014-10-20"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT COUNT(df.cod_prod) 'PRODUCTOS', descripcion
+FROM detalle df, productos p, facturas fa
+WHERE fa.no_fact = df.no_fact AND p.cod_prod = df.cod_prod
+AND fecha BETWEEN $P{FECHAINICIAL} AND $P{FECHAFINAL}
+GROUP BY descripcion
+ORDER BY 1 desc]]>
+	</queryString>
+	<field name="PRODUCTOS" class="java.lang.Long"/>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="13" width="293" height="20" uuid="d51f82cb-801d-49ee-90ff-e5dada36959b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE GENERAL DE PRODUCTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="189" y="8" width="100" height="20" uuid="50c71641-0b2b-43c7-8ab1-c6c2856aa473"/>
+				<textFieldExpression><![CDATA[$P{FECHAINICIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="8" width="100" height="20" uuid="fe9c78fa-43bd-4819-b67d-7c2bda3f2520"/>
+				<textFieldExpression><![CDATA[$P{FECHAFINAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="8" width="27" height="20" uuid="5eb72923-f1ec-4034-b425-a8bc2ae4733d"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="8" width="27" height="20" uuid="fec957ca-7976-4fcd-beef-4cb4f7e88117"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="239" splitType="Stretch">
+			<elementGroup>
+				<bar3DChart>
+					<chart>
+						<reportElement x="33" y="14" width="460" height="217" uuid="13116ac5-99ed-4d95-93b5-5c40fbbafb38"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<categorySeries>
+							<seriesExpression><![CDATA[$F{descripcion}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{descripcion}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{PRODUCTOS}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<bar3DPlot>
+						<plot/>
+						<itemLabel/>
+						<categoryAxisFormat>
+							<axisFormat/>
+						</categoryAxisFormat>
+						<valueAxisFormat>
+							<axisFormat/>
+						</valueAxisFormat>
+					</bar3DPlot>
+				</bar3DChart>
+			</elementGroup>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
